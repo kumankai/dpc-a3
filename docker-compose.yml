@@ -1,0 +1,38 @@
+version: '3.8'
+
+services:
+  pyro4_naming:
+    build: ./pyro4_naming
+    container_name: pyro4_naming
+    networks:
+      - mynetwork
+
+  pyroserver:
+    build: ./pyroserver
+    container_name: pyroserver
+    depends_on:
+      - pyro4_naming
+    networks:
+      - mynetwork
+    environment:
+      - PYRO4_NAMING_HOST=pyro4_naming
+
+  socketserver:
+    build: ./server
+    container_name: socketserver
+    networks:
+      - mynetwork
+    depends_on:
+      - pyroserver
+
+  client:
+    build: ./client
+    container_name: client
+    networks:
+      - mynetwork
+    depends_on:
+      - socketserver
+
+networks:
+  mynetwork:
+    driver: bridge
