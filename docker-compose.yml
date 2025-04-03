@@ -1,38 +1,34 @@
-version: '3.8'
-
 services:
   pyro4_naming:
-    build: ./pyro4_naming
+    build:
+      context: .
+      dockerfile: Dockerfile.pyro4_naming
     container_name: pyro4_naming
-    networks:
-      - mynetwork
+    network_mode: "host"
 
   pyroserver:
-    build: ./pyroserver
+    build:
+      context: .
+      dockerfile: Dockerfile.pyroserver
     container_name: pyroserver
     depends_on:
       - pyro4_naming
-    networks:
-      - mynetwork
-    environment:
-      - PYRO4_NAMING_HOST=pyro4_naming
+    network_mode: "host"
 
   socketserver:
-    build: ./server
-    container_name: socketserver
-    networks:
-      - mynetwork
+    build:
+      context: .
+      dockerfile: Dockerfile.server
+    container_name: mysocketserver
     depends_on:
       - pyroserver
+    network_mode: "host"
 
   client:
-    build: ./client
-    container_name: client
-    networks:
-      - mynetwork
+    build:
+      context: .
+      dockerfile: Dockerfile.client
+    container_name: myclient
     depends_on:
       - socketserver
-
-networks:
-  mynetwork:
-    driver: bridge
+    network_mode: "host"

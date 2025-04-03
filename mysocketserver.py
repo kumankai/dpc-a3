@@ -24,13 +24,13 @@ def handle_client(client_socket, pyro_server):
                 if operation == "add":
                     result = pyro_server.add(*numbers)
                 elif operation == "sub":
-                    result = pyro_server.sub(*numbers)
+                    result = pyro_server.subtract(*numbers)
                 elif operation == "mul":
-                    result = pyro_server.mul(*numbers)
+                    result = pyro_server.multiply(*numbers)
                 elif operation == "div":
-                    result = pyro_server.div(*numbers)
+                    result = pyro_server.divide(*numbers)
                 elif operation == "mod":
-                    result = pyro_server.mod(*numbers)
+                    result = pyro_server.modulus(*numbers)
                 elif operation == "sqrt":
                     result = pyro_server.sqrt(numbers[0])
                 else:
@@ -45,7 +45,7 @@ def handle_client(client_socket, pyro_server):
         client_socket.close()
 
 
-def start_socket_server(host="0.0.0.0", port=5000):
+def start_socket_server(host=socket.gethostname(), port=4000):
     server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     server.bind((host, port))
     server.listen(5)

@@ -1,8 +1,8 @@
 import socket
 
 def main():
-    host = "localhost"  # Change if running in Docker or different machine
-    port = 5000         # Must match `mysocketserver.py`
+    host = socket.gethostname()
+    port = 4000
 
     try:
         with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as client_socket:
@@ -10,7 +10,9 @@ def main():
             print("Connected to the server.")
             
             while True:
-                operation = input("Enter math operation (e.g., 'add 5 3') or 'exit' to quit: ").strip()
+                print("Enter math operation <OPERATION> x y")
+                print("['add', 'sub', 'mul', 'div', 'mod', 'sqrt', 'exit']\n")
+                operation = input("").strip()
                 
                 if operation.lower() == "exit":
                     break
